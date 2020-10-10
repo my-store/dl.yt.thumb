@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Download Youtube Thumbnail</title>
+    <style>
+        * {
+            padding : 0;
+            margin : 0;
+            box-sizing : border-box;
+            text-decoration : none;
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            width : 100%;
+        }
+        h1 {
+            text-align : center;
+            font-size : 15px;
+            padding : 50px 0px 40px 0px;
+        }
+        form {
+            width : 80%;
+            margin : auto;
+        }
+        input {
+            width : 100%;
+            height : 45px;
+            outline : none;
+            border : 1px solid black;
+            border-radius : 4px;
+            padding : 10px 15px 0px 15px;
+        }
+        label {
+            font-size : 12px;
+            font-weight : bold;
+            position : absolute;
+            transform : translate(10px,-7px);
+            padding : 0px 7px 0px 7px;
+            background : white;
+        }
+        .form-btn {
+            visibility : hidden;
+            opacity : 0;
+            transition : 0.30s all ease;
+        }
+        .form-btn-active {
+            visibility : visible;
+            opacity : 1;
+            padding-bottom : 20px;
+        }
+        button {
+            width : 100%;
+            height : 40px;
+            outline : none;
+            border : none;
+            font-weight : bold;
+            border-radius : 4px;
+        }
+        .photo-preview {
+            visibility : hidden;
+            opacity : 0;
+            height : 0px;
+            width : 100%;
+            background-repeat : no-repeat;
+            background-size : cover;
+            background-position : center;
+            background-color : lightgrey;
+            border-radius : 4px;
+        }
+        .photo-preview-active {
+            visibility : visible;
+            opacity : 1;
+            height : 200px;
+            margin : 8px 0px 8px 0px;
+        }
+        #footer {
+            font-size : 10px;
+            text-align : center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Youtube Thumbnail Downloader</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label for="">URL Video</label>
+            <input id="url" type="text" autocomplete="off" name="link" placeholder="Tempel link disini">
+        </div>
+        <div class="photo-preview"></div>
+        <div class="form-group form-btn">
+            <button onclick="ambilFoto()" type="button">Download</button>
+        </div>
+    </form>
+
+    <p id="footer">&copy; <?= date("Y"); ?> Rombax Family</p>
+
+    <script>
+
+        /*
+        |
+        |   === Youtube Thumbnail Downloader ===
+        |
+        |   Creartor        : Izzat alharis
+        |   Email           : izzatalharis@gmail.com
+        |   Github          : https://github.com/my-store
+        |   Phone           : https://github.com/my-store
+        |
+        |
+        */
+
+        let photo_url
+
+        $(document).ready(()=>
+        {
+            $("input").on("paste",()=>
+            {
+                let elm = $("#url")
+                setTimeout(() => {
+                    let text = $(elm).val()
+                    showPhoto(text,"photo-preview")
+                }, 100);
+            })
+        })
+
+        function ambilFoto()
+        {
+            return window.open(photo_url)
+        }
+
+        function showPhoto(input,placeInto) 
+        {
+            let image_url = "https://img.youtube.com/vi/"
+            let img_type = "/hqdefault.jpg"
+
+            let cleaned_input = input.split("=").pop()
+
+            setTimeout(() => {
+                let background = image_url + cleaned_input + img_type
+
+                $("."+placeInto).css({
+                    backgroundImage : `url(${background})`
+                })
+                $("."+placeInto).addClass(placeInto+"-active")
+
+                $(".form-btn").addClass("form-btn-active")
+
+                photo_url = background
+            }, 300);
+
+            return
+        }
+
+        
+    </script>
+
+</body>
+</html>
